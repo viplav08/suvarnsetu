@@ -13,7 +13,7 @@ const dateStr = (d: any) => !d ? '' : String(d).substring(0, 10)
 
 const PERIODS = ['Today', 'Last 7 Days', 'Last 30 Days', 'Monthly'] as const
 type Period   = typeof PERIODS[number]
-type Detail   = 'enrollments'|'collected'|'closed-period'|'outstanding'|'behind'|'this-month'|'active'|'all-closures'|'foreclosures'|'redeemed' | null
+type Detail   = 'enrollments'|'collected'|'closed-period'|'outstanding'|'behind'|'this-month'|'active'|'all-closures'|'foreclosures'|'redeemed'|'mer' | null
 
 function getPaidMonths(enrollment: any, payments: any[]): number {
   return payments
