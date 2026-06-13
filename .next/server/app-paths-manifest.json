@@ -1,0 +1,8 @@
+{
+  "/passbook/[token]/page": "app/passbook/[token]/page.js",
+  "/statement/[id]/page": "app/statement/[id]/page.js",
+  "/(jeweller)/daily-dues/page": "app/(jeweller)/daily-dues/page.js",
+  "/(jeweller)/customers/page": "app/(jeweller)/customers/page.js",
+  "/(jeweller)/dashboard/page": "app/(jeweller)/dashboard/page.js",
+  "/(jeweller)/reports/page": "app/(jeweller)/reports/page.js"
+}

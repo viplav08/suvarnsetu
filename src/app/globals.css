@@ -1,0 +1,129 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg: #F5F0E6;
+  --card: #FFFFFF;
+  --sidebar: #1B1108;
+  --gold: #C09428;
+  --text: #1A1008;
+  --muted: #7A6A5A;
+  --border: #E5DDD0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'DM Sans', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar        { width: 5px; height: 5px; }
+::-webkit-scrollbar-track  { background: #EDE8DE; }
+::-webkit-scrollbar-thumb  { background: #C8B888; border-radius: 3px; }
+
+/* Custom utilities */
+@layer utilities {
+  .font-serif  { font-family: 'Cormorant Garamond', Georgia, serif; }
+  .text-gold   { color: var(--gold); }
+  .bg-cream    { background-color: var(--bg); }
+  .border-brand { border-color: var(--border); }
+}
+
+/* Table row hover */
+tbody tr:hover { background: #FAF7F0; }
+
+/* Input focus ring */
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  border-color: var(--gold) !important;
+  box-shadow: 0 0 0 3px rgba(192, 148, 40, 0.12);
+}
+/* ================================================================
+   SuvarnSetu — Responsive CSS
+   Add these rules to src/app/globals.css (append at the bottom)
+   ================================================================ */
+
+/* All page content — reduce padding on mobile */
+@media (max-width: 768px) {
+
+  /* Page padding */
+  div[style*="padding: '36px 40px'"],
+  div[style*="padding: '32px 40px'"],
+  div[style*="padding: '28px 36px'"] {
+    padding: 16px !important;
+  }
+
+  /* Tables — horizontal scroll */
+  table {
+    min-width: 600px;
+  }
+  div:has(> table) {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Modals — full screen on mobile */
+  div[style*="maxWidth: 480"],
+  div[style*="maxWidth: 560"],
+  div[style*="maxWidth: 620"],
+  div[style*="maxWidth: 680"] {
+    max-width: 100% !important;
+    max-height: 95vh !important;
+    margin: 0 !important;
+    border-radius: 12px 12px 0 0 !important;
+  }
+
+  /* Modal overlay — align to bottom on mobile */
+  div[style*="alignItems: 'center'"][style*="position: 'fixed'"] {
+    align-items: flex-end !important;
+    padding: 0 !important;
+  }
+}
+
+/* Table scroll wrapper utility */
+.table-scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  border-radius: 12px;
+}
+
+/* Responsive grid utilities */
+.grid-responsive-2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+}
+.grid-responsive-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+.grid-responsive-4 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+}
+
+@media (max-width: 768px) {
+  .grid-responsive-2,
+  .grid-responsive-3,
+  .grid-responsive-4 {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+@media (max-width: 480px) {
+  /* Very small screens */
+  body {
+    font-size: 14px;
+  }
+}
