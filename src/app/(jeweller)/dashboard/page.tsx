@@ -274,12 +274,21 @@ export default function DashboardPage() {
           <DetailModal title={`Payments — ${period}`} onClose={() => setDetail(null)}>
             <div style={{ marginBottom: 12, fontSize: 13, fontWeight: 700, color: GOLD }}>{INR(collectedInPeriod)} total · {paymentsInPeriod.length} payments</div>
             {paymentsInPeriod.length === 0 ? <div style={{ color: MUTED, fontSize: 13 }}>No payments in this period.</div> : (
-              <>
-                <DHead cols={['Customer', 'Date', 'Months', 'Mode', 'Amount']} />
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
                 {paymentsInPeriod.sort((a,b)=>b.payment_date.localeCompare(a.payment_date)).map(p => (
-                  <DRow key={p.id} cols={[custName(p), FD(p.payment_date), p.months_paid_for + ' mo', p.payment_mode ?? 'Cash', <span style={{ fontWeight: 700, color: GOLD }}>{INR(p.amount_received)}</span>]} />
+                  <div key={p.id} style={{ background: '#F9F7F3', border: '1px solid #E5DDD0', borderRadius: 10, padding: '12px 14px' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 6 }}>
+                      <div style={{ fontWeight: 700, fontSize: 14, color: TEXT }}>{custName(p)}</div>
+                      <div style={{ fontWeight: 700, fontSize: 15, color: GOLD }}>{INR(p.amount_received)}</div>
+                    </div>
+                    <div style={{ display: 'flex', gap: 14, flexWrap: 'wrap' }}>
+                      <span style={{ fontSize: 12, color: MUTED }}>📅 {FD(p.payment_date)}</span>
+                      <span style={{ fontSize: 12, color: MUTED }}>📆 {p.months_paid_for} mo</span>
+                      <span style={{ fontSize: 12, color: MUTED, textTransform: 'capitalize' }}>💳 {(p.payment_mode ?? 'cash').replace('_',' ')}</span>
+                    </div>
+                  </div>
                 ))}
-              </>
+              </div>
             )}
           </DetailModal>
         )
