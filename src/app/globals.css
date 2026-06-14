@@ -185,3 +185,85 @@ input:focus, select:focus, textarea:focus {
     max-width: calc(100vw - 32px) !important;
   }
 }
+/* ── APPEND THESE LINES TO THE BOTTOM OF src/app/globals.css ── */
+
+/* Mobile sidebar */
+.mobile-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 998;
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  /* Show mobile top bar */
+  .mobile-topbar { display: flex !important; }
+
+  /* Hide notification bar on mobile */
+  .notification-bar { display: none !important; }
+
+  /* Sidebar fixed off-screen */
+  .sidebar-wrapper {
+    position: fixed !important;
+    top: 0; left: 0; bottom: 0;
+    z-index: 999;
+    transform: translateX(-100%);
+    transition: transform 0.22s ease;
+  }
+  body.sidebar-open .sidebar-wrapper {
+    transform: translateX(0);
+  }
+  body.sidebar-open .mobile-overlay {
+    display: block !important;
+  }
+
+  /* Content full width */
+  .main-content { width: 100% !important; }
+
+  /* Reduce page padding */
+  .main-content main > div[style] {
+    padding: 16px !important;
+  }
+
+  /* Stack 3-column grids to 1 column */
+  div[style*="grid-template-columns: 1fr 1fr 1fr"],
+  div[style*="grid-template-columns: repeat(3, 1fr)"],
+  div[style*="repeat(3, 1fr)"] {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Stack 2-column grids to 1 column */
+  div[style*="grid-template-columns: 1fr 1fr"],
+  div[style*="repeat(2, 1fr)"] {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Tables scroll horizontally */
+  table { min-width: 500px; }
+  div:has(> table) {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Modals full width */
+  div[style*="maxWidth: 480"],
+  div[style*="maxWidth: 560"],
+  div[style*="maxWidth: 680"] {
+    max-width: calc(100vw - 24px) !important;
+    margin: 0 12px !important;
+  }
+
+  /* Modal overlay bottom-aligned on mobile */
+  div[style*="position: fixed"][style*="inset: 0"][style*="align-items"] {
+    align-items: flex-end !important;
+    padding: 0 !important;
+  }
+
+  /* Forms full width */
+  form > div[style*="grid-template-columns: 1fr 1fr"] {
+    grid-template-columns: 1fr !important;
+  }
+}
+
