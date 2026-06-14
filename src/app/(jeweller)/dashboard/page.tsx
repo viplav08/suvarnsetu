@@ -434,9 +434,9 @@ export default function DashboardPage() {
       {activeDetail && renderDetail()}
 
       {/* Header */}
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 22 }}>
-        <div style={{ display: 'flex', alignItems: 'baseline', gap: 10 }}>
-          <span style={{ fontFamily: 'var(--font-cormorant), serif', fontSize: 22, fontWeight: 400, color: TEXT }}>{shopName}</span>
+      <div style={{ marginBottom: 22 }}>
+        <span style={{ fontFamily: 'var(--font-cormorant), serif', fontSize: 26, fontWeight: 400, color: TEXT, display: 'block', marginBottom: 12 }}>{shopName}</span>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 6, flexWrap: 'wrap' }}>
           <span style={{ fontSize: 12, color: MUTED }}>{today.toLocaleDateString('en-IN', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' })}</span>
         </div>
         <div style={{ display: 'flex', background: '#fff', border: BORDER, borderRadius: 9, padding: 3, gap: 2 }}>

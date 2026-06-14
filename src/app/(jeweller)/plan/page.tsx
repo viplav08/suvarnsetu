@@ -67,7 +67,7 @@ export default async function PlanPage() {
         {PLANS.map(plan => {
           const isCurrent = currentPlan === plan.id
           return (
-            <div key={plan.id} style={{ background: '#fff', borderRadius: 14, border: isCurrent ? `2px solid ${plan.color}` : BORDER, padding: '28px 24px', position: 'relative' }}>
+            <div key={plan.id} style={{ background: '#fff', borderRadius: 14, border: isCurrent ? `2px solid ${plan.color}` : BORDER, padding: '28px 24px', position: 'relative', display: 'flex', flexDirection: 'column' }}>
               {plan.popular && (
                 <div style={{ position: 'absolute', top: -12, left: '50%', transform: 'translateX(-50%)', background: GOLD, color: '#fff', fontSize: 11, fontWeight: 700, padding: '3px 14px', borderRadius: 20, whiteSpace: 'nowrap', letterSpacing: '0.05em' }}>
                   MOST POPULAR
@@ -78,7 +78,7 @@ export default async function PlanPage() {
                   CURRENT
                 </div>
               )}
-              <div style={{ marginBottom: 20 }}>
+              <div style={{ marginBottom: 20, flex: 1 }}>
                 <div style={{ fontSize: 13, fontWeight: 700, color: plan.color, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 6 }}>{plan.label}</div>
                 <div style={{ display: 'flex', alignItems: 'baseline', gap: 4, marginBottom: 4 }}>
                   <span style={{ fontFamily: 'var(--font-cormorant), serif', fontSize: 32, fontWeight: 400, color: TEXT }}>{plan.price}</span>
@@ -87,7 +87,7 @@ export default async function PlanPage() {
                 <div style={{ fontSize: 12, color: MUTED }}>{plan.annual}/year <span style={{ color: '#1A7A3A', fontWeight: 600 }}>· Save 2 months</span></div>
               </div>
 
-              <div style={{ marginBottom: 20 }}>
+              <div style={{ marginBottom: 20, flex: 1 }}>
                 {plan.features.map(f => (
                   <div key={f} style={{ display: 'flex', gap: 8, marginBottom: 7, fontSize: 13, color: TEXT }}>
                     <span style={{ color: plan.color, flexShrink: 0, fontWeight: 700 }}>✓</span>{f}
