@@ -1,6 +1,6 @@
 import { createClient } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation'
-import LayoutShell from './layout-shell'
+import LayoutShell from '@/components/layout/LayoutShell'
 
 function trialDaysLeft(t: string | null) {
   if (!t) return null
