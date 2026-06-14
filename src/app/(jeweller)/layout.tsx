@@ -60,7 +60,7 @@ export default async function JewellerLayout({ children }: { children: React.Rea
       </div>
 
       {/* Mobile overlay — shown when sidebar open */}
-      <div className="mobile-overlay" onClick={() => {}} id="mobile-overlay" />
+     <div className="mobile-overlay" id="mobile-overlay" />
 
       {/* Main content */}
       <div className="main-content" style={{ flex:1, display:'flex', flexDirection:'column', overflow:'hidden', minWidth:0 }}>
