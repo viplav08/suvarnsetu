@@ -212,17 +212,30 @@ export default function DailyDuesClient({ dueToday, overdue, renewingSoon, tenan
     const cols = showRemarks
       ? ['Customer', 'Mobile', 'Monthly', 'Overdue', 'Pending', 'Last Note', 'Actions']
       : ['Customer', 'Mobile', 'Monthly', 'Pending', 'Actions']
+
+    if (items.length === 0) return (
+      <div style={{ textAlign: 'center', padding: 32, color: MUTED, fontSize: 13, fontStyle: 'italic' }}>None</div>
+    )
+
     return (
-      <div style={{ background: '#fff', borderRadius: 12, border: BORDER, overflow: 'hidden' }}>
-        <table style={{ width: '100%', borderCollapse: 'collapse' }}>
-          <thead><tr>{cols.map(h => <th key={h} style={{ textAlign: 'left', padding: '10px 14px', fontSize: 11, fontWeight: 700, color: MUTED, borderBottom: BORDER, textTransform: 'uppercase', letterSpacing: '0.07em', whiteSpace: 'nowrap' }}>{h}</th>)}</tr></thead>
-          <tbody>
-            {items.length === 0
-              ? <tr><td colSpan={cols.length} style={{ padding: 32, textAlign: 'center', color: MUTED }}>None</td></tr>
-              : items.map((item: any) => <DueRow key={item.enrollment.id} item={item} showRemarks={showRemarks} />)}
-          </tbody>
-        </table>
-      </div>
+      <>
+        {/* Mobile cards — hidden on desktop via CSS */}
+        <div className="mobile-due-cards" style={{ display: 'none' }}>
+          {items.map((item: any) => (
+            <DueMobileCard key={item.enrollment.id} item={item} showRemarks={showRemarks} />
+          ))}
+        </div>
+
+        {/* Desktop table — hidden on mobile via CSS */}
+        <div className="desktop-due-table" style={{ background: '#fff', borderRadius: 12, border: BORDER, overflow: 'hidden' }}>
+          <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+            <thead><tr>{cols.map(h => <th key={h} style={{ textAlign: 'left', padding: '10px 14px', fontSize: 11, fontWeight: 700, color: MUTED, borderBottom: BORDER, textTransform: 'uppercase', letterSpacing: '0.07em', whiteSpace: 'nowrap' }}>{h}</th>)}</tr></thead>
+            <tbody>
+              {items.map((item: any) => <DueRow key={item.enrollment.id} item={item} showRemarks={showRemarks} />)}
+            </tbody>
+          </table>
+        </div>
+      </>
     )
   }
 
