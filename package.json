@@ -2,12 +2,12 @@
   "name": "suvarnsetu",
   "version": "0.1.0",
   "private": true,
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
-  },
+ "scripts": {
+  "dev": "next dev",
+  "build": "next build && node -e \"const fs=require('fs');const p='.next/server/app/(jeweller)';fs.mkdirSync(p,{recursive:true});const f=p+'/page_client-reference-manifest.js';if(!fs.existsSync(f))fs.writeFileSync(f,JSON.stringify({ssrModuleMapping:{},edgeSSRModuleMapping:{},clientModules:{}}));\"",
+  "start": "next start",
+  "lint": "next lint"
+},
   "dependencies": {
     "@supabase/ssr": "^0.5.2",
     "@supabase/supabase-js": "^2.105.3",
