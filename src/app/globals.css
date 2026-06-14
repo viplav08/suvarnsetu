@@ -136,6 +136,10 @@ input:focus, select:focus, textarea:focus {
     grid-template-columns: 1fr !important;
   }
 
+  /* Daily dues — show cards on mobile, hide table */
+  .mobile-due-cards { display: block !important; }
+  .desktop-due-table { display: none !important; }
+
   /* Small screens */
   body { font-size: 14px; }
 }

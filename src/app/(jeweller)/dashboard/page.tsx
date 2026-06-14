@@ -210,6 +210,12 @@ export default function DashboardPage() {
 
   // ── Period-filtered ──
   const enrolledInPeriod  = enrollments.filter(e => e.created_at && new Date(e.created_at) >= pStart)
+  // Lookup map: enrollment_id or customer_id → customer name
+  const custName = (p: any): string => {
+    const e = enrollments.find(en => en.id === p.enrollment_id || en.customer_id === p.customer_id)
+    return (e?.customers as any)?.full_name ?? '—'
+  }
+
   const paymentsInPeriod  = payments.filter(p => { const d = dateStr(p.payment_date); return d && new Date(d + 'T00:00:00') >= pStart })
   const closuresInPeriod  = closures.filter(c => c.closure_date && new Date(c.closure_date + 'T00:00:00') >= pStart)
   const collectedInPeriod = paymentsInPeriod.reduce((s, p) => s + p.amount_received, 0)
@@ -269,9 +275,9 @@ export default function DashboardPage() {
             <div style={{ marginBottom: 12, fontSize: 13, fontWeight: 700, color: GOLD }}>{INR(collectedInPeriod)} total · {paymentsInPeriod.length} payments</div>
             {paymentsInPeriod.length === 0 ? <div style={{ color: MUTED, fontSize: 13 }}>No payments in this period.</div> : (
               <>
-                <DHead cols={['Date', 'Months', 'Mode', 'Amount']} />
+                <DHead cols={['Customer', 'Date', 'Months', 'Mode', 'Amount']} />
                 {paymentsInPeriod.sort((a,b)=>b.payment_date.localeCompare(a.payment_date)).map(p => (
-                  <DRow key={p.id} cols={[FD(p.payment_date), p.months_paid_for + ' mo', p.payment_mode ?? 'Cash', <span style={{ fontWeight: 700, color: GOLD }}>{INR(p.amount_received)}</span>]} />
+                  <DRow key={p.id} cols={[custName(p), FD(p.payment_date), p.months_paid_for + ' mo', p.payment_mode ?? 'Cash', <span style={{ fontWeight: 700, color: GOLD }}>{INR(p.amount_received)}</span>]} />
                 ))}
               </>
             )}
