@@ -19,19 +19,18 @@ export default function LayoutShell({ children, role, plan, trialBanner, notific
     return () => window.removeEventListener('resize', check)
   }, [])
 
-  // Close sidebar on route change (mobile)
-  useEffect(() => { if (isMobile) setOpen(false) }, [])
+  // Close sidebar when navigating on mobile
+  useEffect(() => { if (isMobile) setOpen(false) }, [isMobile])
 
   return (
     <div style={{ display: 'flex', minHeight: '100vh', background: '#F5F0E6' }}>
 
       {/* Mobile overlay */}
       {isMobile && open && (
-        <div onClick={() => setOpen(false)}
-          style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.5)', zIndex: 998 }} />
+        <div onClick={() => setOpen(false)} style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.5)', zIndex: 998 }} />
       )}
 
-      {/* Sidebar — fixed on mobile, static on desktop */}
+      {/* Sidebar */}
       <div style={{
         position:   isMobile ? 'fixed' : 'relative',
         top: 0, left: 0, bottom: 0,
@@ -43,7 +42,7 @@ export default function LayoutShell({ children, role, plan, trialBanner, notific
         <Sidebar role={role} plan={plan as any} />
       </div>
 
-      {/* Main content area */}
+      {/* Main */}
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden', minWidth: 0 }}>
 
         {/* Mobile top bar */}
@@ -57,13 +56,11 @@ export default function LayoutShell({ children, role, plan, trialBanner, notific
           </div>
         )}
 
-        {/* Trial banner */}
         {trialBanner}
 
-        {/* Notification bar — hidden on mobile to save space */}
+        {/* Notification bar — desktop only */}
         {!isMobile && notificationBar}
 
-        {/* Page content */}
         <main style={{ flex: 1, overflowY: 'auto', overflowX: 'hidden' }}>
           {children}
         </main>

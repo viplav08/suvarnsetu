@@ -86,7 +86,7 @@ export default function SignupPage() {
             <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
               <div>
                 <Lbl t="Shop Name" />
-                <input style={inp} required placeholder="e.g. Unique Jewellers" value={form.shop_name}
+                <input style={inp} required placeholder="e.g. Shri Hari Jewellers" value={form.shop_name}
                   onChange={e => setForm({ ...form, shop_name: e.target.value })} />
               </div>
               <div>
