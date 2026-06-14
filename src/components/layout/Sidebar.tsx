@@ -1,4 +1,5 @@
 'use client'
+import { useEffect } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import LogoutButton from '@/components/layout/LogoutButton'
@@ -56,14 +57,12 @@ export default function Sidebar({ role, plan = 'trial' }: { role: string; plan?:
   const planColors = PLAN_COLORS[safePlan]
   const nav        = ALL_NAV.filter(item => item.roles.includes(role))
 
-  function closeSidebar() {
-    // Delay DOM change so Link navigation fires first
-    setTimeout(() => {
-      document.body.classList.remove('sidebar-open')
-      const overlay = document.getElementById('mobile-overlay')
-      if (overlay) overlay.style.display = 'none'
-    }, 50)
-  }
+  // Close sidebar automatically after navigation completes
+  useEffect(() => {
+    document.body.classList.remove('sidebar-open')
+    const overlay = document.getElementById('mobile-overlay')
+    if (overlay) overlay.style.display = 'none'
+  }, [pathname])
 
   return (
     <aside style={{ width: 230, minHeight: '100vh', background: '#1B1108', display: 'flex', flexDirection: 'column', padding: '24px 14px', flexShrink: 0 }}>
@@ -91,7 +90,7 @@ export default function Sidebar({ role, plan = 'trial' }: { role: string; plan?:
           const locked = item.feature ? !canAccess(item.feature, safePlan) : false
           const active = pathname === item.href || pathname.startsWith(item.href + '/')
           return (
-            <Link key={item.href} href={item.href} onClick={closeSidebar}
+            <Link key={item.href} href={item.href}
               style={{ display: 'flex', alignItems: 'center', gap: 10, justifyContent: 'space-between', color: active ? '#fff' : locked ? 'rgba(255,255,255,0.35)' : 'rgba(255,255,255,0.75)', textDecoration: 'none', padding: '9px 12px', borderRadius: 8, fontSize: 13.5, fontWeight: active ? 600 : 400, background: active ? 'rgba(255,255,255,0.1)' : 'transparent' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
                 <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}>
