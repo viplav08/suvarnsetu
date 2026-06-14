@@ -57,9 +57,12 @@ export default function Sidebar({ role, plan = 'trial' }: { role: string; plan?:
   const nav        = ALL_NAV.filter(item => item.roles.includes(role))
 
   function closeSidebar() {
-    document.body.classList.remove('sidebar-open')
-    const overlay = document.getElementById('mobile-overlay')
-    if (overlay) overlay.style.display = 'none'
+    // Delay DOM change so Link navigation fires first
+    setTimeout(() => {
+      document.body.classList.remove('sidebar-open')
+      const overlay = document.getElementById('mobile-overlay')
+      if (overlay) overlay.style.display = 'none'
+    }, 50)
   }
 
   return (

@@ -32,9 +32,9 @@ body {
 
 /* Custom utilities */
 @layer utilities {
-  .font-serif  { font-family: 'Cormorant Garamond', Georgia, serif; }
-  .text-gold   { color: var(--gold); }
-  .bg-cream    { background-color: var(--bg); }
+  .font-serif   { font-family: 'Cormorant Garamond', Georgia, serif; }
+  .text-gold    { color: var(--gold); }
+  .bg-cream     { background-color: var(--bg); }
   .border-brand { border-color: var(--border); }
 }
 
@@ -47,147 +47,13 @@ input:focus, select:focus, textarea:focus {
   border-color: var(--gold) !important;
   box-shadow: 0 0 0 3px rgba(192, 148, 40, 0.12);
 }
-/* ================================================================
-   SuvarnSetu — Responsive CSS
-   Add these rules to src/app/globals.css (append at the bottom)
-   ================================================================ */
 
-/* All page content — reduce padding on mobile */
-@media (max-width: 768px) {
+/* ── Responsive grid utilities ── */
+.grid-responsive-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+.grid-responsive-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+.grid-responsive-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
 
-  /* Page padding */
-  div[style*="padding: '36px 40px'"],
-  div[style*="padding: '32px 40px'"],
-  div[style*="padding: '28px 36px'"] {
-    padding: 16px !important;
-  }
-
-  /* Tables — horizontal scroll */
-  table {
-    min-width: 600px;
-  }
-  div:has(> table) {
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-  }
-
-  /* Modals — full screen on mobile */
-  div[style*="maxWidth: 480"],
-  div[style*="maxWidth: 560"],
-  div[style*="maxWidth: 620"],
-  div[style*="maxWidth: 680"] {
-    max-width: 100% !important;
-    max-height: 95vh !important;
-    margin: 0 !important;
-    border-radius: 12px 12px 0 0 !important;
-  }
-
-  /* Modal overlay — align to bottom on mobile */
-  div[style*="alignItems: 'center'"][style*="position: 'fixed'"] {
-    align-items: flex-end !important;
-    padding: 0 !important;
-  }
-}
-
-/* Table scroll wrapper utility */
-.table-scroll {
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-  border-radius: 12px;
-}
-
-/* Responsive grid utilities */
-.grid-responsive-2 {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 14px;
-}
-.grid-responsive-3 {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 14px;
-}
-.grid-responsive-4 {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 14px;
-}
-
-@media (max-width: 768px) {
-  .grid-responsive-2,
-  .grid-responsive-3,
-  .grid-responsive-4 {
-    grid-template-columns: 1fr !important;
-  }
-}
-
-@media (max-width: 480px) {
-  /* Very small screens */
-  body {
-    font-size: 14px;
-  }
-}
-/* ── APPEND THESE LINES TO THE BOTTOM OF src/app/globals.css ── */
-
-/* Mobile sidebar toggle */
-.mobile-overlay {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.5);
-  z-index: 998;
-}
-
-@media (max-width: 768px) {
-  /* Show mobile top bar */
-  .mobile-topbar { display: flex !important; }
-
-  /* Hide notification bar on mobile */
-  .notification-bar { display: none !important; }
-
-  /* Sidebar fixed off-screen on mobile */
-  .sidebar-wrapper {
-    position: fixed !important;
-    top: 0; left: 0; bottom: 0;
-    z-index: 999;
-    transform: translateX(-100%);
-    transition: transform 0.22s ease;
-  }
-
-  /* Sidebar slides in when body has sidebar-open class */
-  body.sidebar-open .sidebar-wrapper {
-    transform: translateX(0);
-  }
-
-  /* Content takes full width */
-  .main-content {
-    width: 100% !important;
-  }
-
-  /* Reduce padding on mobile pages */
-  .main-content main > div {
-    padding: 16px !important;
-  }
-
-  /* Tables scroll horizontally */
-  table {
-    min-width: 500px;
-  }
-  div:has(> table) {
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-  }
-
-  /* Modals full width on mobile */
-  div[style*="maxWidth: 480"],
-  div[style*="maxWidth: 560"],
-  div[style*="maxWidth: 680"] {
-    max-width: calc(100vw - 32px) !important;
-  }
-}
-/* ── APPEND THESE LINES TO THE BOTTOM OF src/app/globals.css ── */
-
-/* Mobile sidebar */
+/* ── Mobile sidebar overlay ── */
 .mobile-overlay {
   display: none;
   position: fixed;
@@ -197,14 +63,16 @@ input:focus, select:focus, textarea:focus {
   cursor: pointer;
 }
 
+/* ── Mobile responsive ── */
 @media (max-width: 768px) {
-  /* Show mobile top bar */
+
+  /* Show hamburger top bar */
   .mobile-topbar { display: flex !important; }
 
-  /* Hide notification bar on mobile */
+  /* Hide desktop notification bar */
   .notification-bar { display: none !important; }
 
-  /* Sidebar fixed off-screen */
+  /* Sidebar — fixed off-screen, slides in */
   .sidebar-wrapper {
     position: fixed !important;
     top: 0; left: 0; bottom: 0;
@@ -219,7 +87,7 @@ input:focus, select:focus, textarea:focus {
     display: block !important;
   }
 
-  /* Content full width */
+  /* Main content full width */
   .main-content { width: 100% !important; }
 
   /* Reduce page padding */
@@ -227,27 +95,35 @@ input:focus, select:focus, textarea:focus {
     padding: 16px !important;
   }
 
-  /* Stack 3-column grids to 1 column */
+  /* Collapse 3-col grids to 1 col */
   div[style*="grid-template-columns: 1fr 1fr 1fr"],
-  div[style*="grid-template-columns: repeat(3, 1fr)"],
-  div[style*="repeat(3, 1fr)"] {
+  div[style*="grid-template-columns: repeat(3, 1fr)"] {
     grid-template-columns: 1fr !important;
   }
 
-  /* Stack 2-column grids to 1 column */
+  /* Collapse 2-col grids to 1 col */
   div[style*="grid-template-columns: 1fr 1fr"],
-  div[style*="repeat(2, 1fr)"] {
+  div[style*="grid-template-columns: repeat(2, 1fr)"] {
     grid-template-columns: 1fr !important;
   }
 
-  /* Tables scroll horizontally */
-  table { min-width: 500px; }
-  div:has(> table) {
+  /* Collapse responsive grid utilities */
+  .grid-responsive-2,
+  .grid-responsive-3,
+  .grid-responsive-4 {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Tables — horizontal scroll on all Android browsers */
+  table {
+    min-width: 500px;
+    display: block;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
   }
+  thead, tbody { display: table; width: 100%; }
 
-  /* Modals full width */
+  /* Modals full width, slide up from bottom */
   div[style*="maxWidth: 480"],
   div[style*="maxWidth: 560"],
   div[style*="maxWidth: 680"] {
@@ -255,15 +131,11 @@ input:focus, select:focus, textarea:focus {
     margin: 0 12px !important;
   }
 
-  /* Modal overlay bottom-aligned on mobile */
-  div[style*="position: fixed"][style*="inset: 0"][style*="align-items"] {
-    align-items: flex-end !important;
-    padding: 0 !important;
-  }
-
-  /* Forms full width */
+  /* Forms 1-col on mobile */
   form > div[style*="grid-template-columns: 1fr 1fr"] {
     grid-template-columns: 1fr !important;
   }
-}
 
+  /* Small screens */
+  body { font-size: 14px; }
+}
