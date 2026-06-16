@@ -17,7 +17,7 @@ export default async function CustomersPage() {
       .order('full_name'),
     supabase
       .from('enrollments')
-      .select('*')
+      .select('*, employees(name)')
       .eq('tenant_id', tenantId)
       .order('created_at'),
     supabase
@@ -38,6 +38,7 @@ export default async function CustomersPage() {
       employees={employees ?? []}
       tenantId={tenantId}
       schemeDuration={tenant?.scheme_duration ?? 11}
+      plan={tenant?.plan ?? 'trial'}
     />
   )
 }

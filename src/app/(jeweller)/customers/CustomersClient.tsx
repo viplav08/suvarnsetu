@@ -1,5 +1,6 @@
 'use client'
-import { useState, useMemo } from 'react'
+import BulkUploadModal from './BulkUploadModal'
+mport { useState, useMemo } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import { useRouter } from 'next/navigation'
 import { formatINR, formatDate, getDueDay } from '@/lib/utils'
@@ -28,7 +29,7 @@ const SectionHead = ({ t }: { t: string }) => (
   <div style={{ fontSize: 11, fontWeight: 700, color: MUTED, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 10, marginTop: 4 }}>{t}</div>
 )
 
-export default function CustomersClient({ customers, enrollments, employees, tenantId, schemeDuration }: any) {
+export default function CustomersClient({ customers, enrollments, employees, tenantId, schemeDuration, plan }: any) {
   const router   = useRouter()
   const supabase = createClient()
 
@@ -154,12 +155,15 @@ export default function CustomersClient({ customers, enrollments, employees, ten
     e.preventDefault()
     if (lookupState !== 'found' && lookupState !== 'new') { setFormErr('Enter a mobile number first.'); return }
     if (!enrollment.monthly_amount) { setFormErr('Monthly amount is required.'); return }
-    // Check enrollment limit based on plan
+    // Enforce enrollment limit based on plan
     const activeCount = enrollments.filter((e: any) => e.status === 'active').length
-    const planLimits: Record<string, number> = { trial: 999999, starter: 100, growth: 300, professional: 999999 }
-    const { data: { user } } = await supabase.auth.getUser()
-    const tenantPlan = 'trial' // Will be passed as prop in next iteration
-    // Note: plan enforcement is also handled server-side
+    const planLimits: Record<string, number> = { trial: 20, starter: 100, growth: 300, professional: 9999 }
+    const currentLimit = planLimits[plan ?? 'trial'] ?? 20
+    if (activeCount >= currentLimit) {
+      setFormErr(`You've reached the ${currentLimit} active enrollment limit on your ${plan ?? 'trial'} plan. Please upgrade to add more.`)
+      setSaving(false)
+      return
+    }
     setSaving(true); setFormErr('')
 
     const dueDay = getDueDay(enrollment.signup_date)
@@ -594,5 +598,12 @@ export default function CustomersClient({ customers, enrollments, employees, ten
       )}
 
     </div>
+    {showBulk && (
+      <BulkUploadModal
+        tenantId={tenantId}
+        onClose={() => setShowBulk(false)}
+        onDone={() => window.location.reload()}
+      />
+    )}
   )
 }

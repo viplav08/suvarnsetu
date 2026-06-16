@@ -161,7 +161,14 @@ export default function SuperAdminClient({ tenants: init }: { tenants: any[] }) 
                     <td style={{ padding: '12px 14px', borderBottom: '1px solid #F0EAE0', color: TEXT, fontSize: 13, whiteSpace: 'nowrap' }}>{t.license_expires_at ? FD(t.license_expires_at) : '—'}</td>
                     <td style={{ padding: '12px 14px', borderBottom: '1px solid #F0EAE0' }}><DaysBadge exp={t.license_expires_at} /></td>
                     <td style={{ padding: '12px 14px', borderBottom: '1px solid #F0EAE0' }}>
-                      {(() => { const pc: Record<string,any> = {trial:{bg:'#FEF9E0',color:'#856404'},starter:{bg:'#EEF6FF',color:'#1A5FB4'},growth:{bg:'#F0FFF4',color:'#1A7A3A'},professional:{bg:'#F5F0FF',color:'#5030A0'}}; const s=pc[t.plan??'trial']??pc.trial; return <span style={{padding:'3px 10px',borderRadius:16,fontSize:11,fontWeight:700,background:s.bg,color:s.color,textTransform:'capitalize'}}>{t.plan??'trial'}</span> })()}
+                      <select value={t.plan ?? 'trial'}
+                        onChange={e => changePlan(t.id, e.target.value)}
+                        style={{ fontSize: 12, padding: '4px 8px', borderRadius: 8, border: '1px solid #E5DDD0', background: '#fff', cursor: 'pointer', fontWeight: 600, color: t.plan === 'professional' ? '#5030A0' : t.plan === 'growth' ? '#1A7A3A' : t.plan === 'starter' ? '#1A5FB4' : '#856404' }}>
+                        <option value="trial">Trial</option>
+                        <option value="starter">Starter</option>
+                        <option value="growth">Growth</option>
+                        <option value="professional">Professional</option>
+                      </select>
                     </td>
                     <td style={{ padding: '12px 14px', borderBottom: '1px solid #F0EAE0' }}>
                       <span style={{ padding: '3px 10px', borderRadius: 16, fontSize: 11, fontWeight: 700, background: t.is_active ? '#F0FFF4' : '#F5F5F5', color: t.is_active ? '#1A7A3A' : '#888', border: `1px solid ${t.is_active ? '#6EC68A' : '#ccc'}` }}>{t.is_active ? 'Active' : 'Inactive'}</span>
