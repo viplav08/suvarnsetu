@@ -1,6 +1,6 @@
 'use client'
 import BulkUploadModal from './BulkUploadModal'
-mport { useState, useMemo } from 'react'
+import { useState, useMemo } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import { useRouter } from 'next/navigation'
 import { formatINR, formatDate, getDueDay } from '@/lib/utils'
