@@ -228,6 +228,7 @@ export default function CustomersClient({ customers, enrollments, employees, ten
   }
 
   return (
+    <>
     <div style={{ padding: '36px 40px' }}>
       {/* Header */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 28 }}>
@@ -595,7 +596,7 @@ export default function CustomersClient({ customers, enrollments, employees, ten
 
           </div>
         </div>
-      )}`n    </>
+      )}
 
     </div>
     {showBulk && (
@@ -605,6 +606,6 @@ export default function CustomersClient({ customers, enrollments, employees, ten
         onDone={() => window.location.reload()}
       />
     )}
+    </>
   )
 }
-
