@@ -3,7 +3,9 @@ import BulkUploadModal from './BulkUploadModal'
 import { useState, useMemo } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import { useRouter } from 'next/navigation'
-import { formatINR, formatDate, getDueDay } from '@/lib/utils'
+const formatINR = (n: number) => '₹' + Math.round(n || 0).toLocaleString('en-IN')
+const formatDate = (d: string) => !d ? '—' : new Date(d + 'T00:00:00').toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' })
+const getDueDay  = (signup: string) => new Date(signup + 'T00:00:00').getDate()
 
 const GOLD = '#C09428', TEXT = '#1A1008', MUTED = '#7A6A5A', BORDER = '1px solid #E5DDD0'
 
@@ -37,6 +39,7 @@ export default function CustomersClient({ customers, enrollments, employees, ten
   const [showModal, setShowModal] = useState(false)
   const [saving,   setSaving]   = useState(false)
   const [formErr,  setFormErr]  = useState('')
+  const [showBulk, setShowBulk] = useState(false)
 
   // ── Customer profile modal ──────────────────────────────────────────
   const [profileCustomer, setProfileCustomer]   = useState<any>(null)
