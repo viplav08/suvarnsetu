@@ -595,7 +595,7 @@ export default function CustomersClient({ customers, enrollments, employees, ten
 
           </div>
         </div>
-      )}
+      )}`n    </>
 
     </div>
     {showBulk && (
@@ -607,3 +607,4 @@ export default function CustomersClient({ customers, enrollments, employees, ten
     )}
   )
 }
+

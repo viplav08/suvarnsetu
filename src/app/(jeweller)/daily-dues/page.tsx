@@ -73,6 +73,30 @@ export default async function DailyDuesPage() {
     }
   }
 
+  // Due in next 1-3 days (not today, not overdue)
+  const dueSoon: any[] = []
+  for (const e of (enrollments ?? [])) {
+    const customer = customerMap[e.customer_id]
+    if (!customer) continue
+    const paid   = getPaidMonths(e)
+    const dueDay = new Date(e.signup_date + 'T00:00:00').getDate()
+    // Next due date
+    const nextDue = new Date(today.getFullYear(), today.getMonth(), dueDay)
+    if (nextDue <= today) nextDue.setMonth(nextDue.getMonth() + 1)
+    const daysUntil = Math.ceil((nextDue.getTime() - today.getTime()) / 86400000)
+    // Only show if payment is still pending for that upcoming month
+    const dueDates = countDueDates(e.signup_date, nextDue)
+    const totalDue = Math.max(0, dueDates.length - paid)
+    if (daysUntil >= 1 && daysUntil <= 3 && totalDue > 0) {
+      // Skip if already in overdue list
+      const isOverdue = (Math.max(0, countDueDates(e.signup_date, today).filter(d => d < today).length - paid)) > 0
+      if (!isOverdue) {
+        dueSoon.push({ customer, enrollment: e, daysUntil, dueDate: nextDue.toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' }), amount: e.monthly_amount })
+      }
+    }
+  }
+  dueSoon.sort((a, b) => a.daysUntil - b.daysUntil)
+
   overdueList.sort((a, b) => b.daysOverdue - a.daysOverdue)
   renewingSoon.sort((a, b) => a.daysLeft - b.daysLeft)
 
@@ -80,6 +104,7 @@ export default async function DailyDuesPage() {
     <DailyDuesClient
       dueToday={dueToday}
       overdue={overdueList}
+      dueSoon={dueSoon}
       renewingSoon={renewingSoon}
       tenantId={tenantId}
     />

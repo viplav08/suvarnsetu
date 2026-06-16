@@ -9,7 +9,7 @@ const FD      = (d: string) => !d ? '—' : new Date(d + 'T00:00:00').toLocaleDa
 const dateStr = (d: any) => !d ? '' : String(d).substring(0, 10)
 const todayLocal = () => { const d = new Date(); return [d.getFullYear(), String(d.getMonth()+1).padStart(2,'0'), String(d.getDate()).padStart(2,'0')].join('-') }
 
-export default function DailyDuesClient({ dueToday, overdue, renewingSoon, tenantId }: any) {
+export default function DailyDuesClient({ dueToday, overdue, dueSoon, renewingSoon, tenantId }: any) {
   const router   = useRouter()
   const supabase = createClient()
 
@@ -264,6 +264,43 @@ export default function DailyDuesClient({ dueToday, overdue, renewingSoon, tenan
         <div style={{ fontFamily: 'var(--font-cormorant), serif', fontSize: 22, fontWeight: 400, color: TEXT, marginBottom: 10 }}>Due Today ({dueToday.length})</div>
         <Table items={dueToday} showRemarks={false} />
       </div>
+
+      {/* Due in Next 3 Days */}
+      {(dueSoon??[]).length > 0 && (
+        <div style={{ marginBottom: 28 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 14 }}>
+            <h2 style={{ fontFamily: 'var(--font-cormorant), serif', fontSize: 22, fontWeight: 400, color: TEXT }}>Due in Next 3 Days</h2>
+            <span style={{ background: '#EEF6FF', color: '#1A5FB4', padding: '3px 10px', borderRadius: 14, fontSize: 12, fontWeight: 700 }}>{(dueSoon??[]).length} customers</span>
+          </div>
+          <div style={{ background: '#fff', borderRadius: 12, border: '1px solid #BFDBFE', overflow: 'hidden' }}>
+            <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+              <thead><tr style={{ background: '#EEF6FF' }}>
+                {['Customer', 'Mobile', 'Due Date', 'Days Until', 'Amount'].map(h => (
+                  <th key={h} style={{ textAlign: 'left', padding: '10px 14px', fontSize: 11, fontWeight: 700, color: '#1A5FB4', borderBottom: '1px solid #BFDBFE', textTransform: 'uppercase', letterSpacing: '0.07em', whiteSpace: 'nowrap' }}>{h}</th>
+                ))}
+              </tr></thead>
+              <tbody>
+                {(dueSoon??[]).map((item: any) => (
+                  <tr key={item.enrollment.id} style={{ borderBottom: '1px solid #EEF6FF' }}>
+                    <td style={{ padding: '11px 14px' }}>
+                      <div style={{ fontWeight: 600, color: TEXT }}>{item.customer.full_name}</div>
+                      <div style={{ fontSize: 11, color: MUTED }}>{item.enrollment.enrollment_id}</div>
+                    </td>
+                    <td style={{ padding: '11px 14px', color: MUTED, fontSize: 13 }}>{item.customer.mobile}</td>
+                    <td style={{ padding: '11px 14px', fontWeight: 600, color: TEXT }}>{item.dueDate}</td>
+                    <td style={{ padding: '11px 14px' }}>
+                      <span style={{ background: item.daysUntil === 1 ? '#FEE2E2' : item.daysUntil === 2 ? '#FEF0E0' : '#EEF6FF', color: item.daysUntil === 1 ? '#C03030' : item.daysUntil === 2 ? '#C05000' : '#1A5FB4', padding: '3px 10px', borderRadius: 14, fontSize: 12, fontWeight: 700 }}>
+                        {item.daysUntil} day{item.daysUntil > 1 ? 's' : ''}
+                      </span>
+                    </td>
+                    <td style={{ padding: '11px 14px', fontWeight: 700, color: '#1A5FB4' }}>{INR(item.amount)}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      )}
 
       {/* Overdue */}
       <div style={{ marginBottom: 24 }}>
