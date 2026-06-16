@@ -241,10 +241,16 @@ export default function CustomersClient({ customers, enrollments, employees, ten
             {customers.length} persons · {enrollments.filter((e: any) => e.status === 'active').length} active enrollments
           </p>
         </div>
-        <button onClick={() => openModal()}
-          style={{ background: GOLD, color: '#fff', border: 'none', padding: '9px 20px', borderRadius: 8, cursor: 'pointer', fontWeight: 600, fontSize: 13.5 }}>
-          + Enrol Customer
-        </button>
+        <div style={{ display: 'flex', gap: 10 }}>
+          <button onClick={() => setShowBulk(true)}
+            style={{ background: 'transparent', border: BORDER, color: MUTED, padding: '9px 16px', borderRadius: 8, cursor: 'pointer', fontWeight: 500, fontSize: 13 }}>
+            ↑ Bulk Import
+          </button>
+          <button onClick={() => openModal()}
+            style={{ background: GOLD, color: '#fff', border: 'none', padding: '9px 20px', borderRadius: 8, cursor: 'pointer', fontWeight: 600, fontSize: 13.5 }}>
+            + Enrol Customer
+          </button>
+        </div>
       </div>
 
       {/* Search */}
